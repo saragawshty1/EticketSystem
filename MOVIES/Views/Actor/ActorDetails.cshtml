@@ -1,0 +1,20 @@
+﻿ @model Actor 
+@{
+    // <div class="card" style="width:500px">
+    //     <img class="card-img-top" src="~/images/cast/@Model.ProfilePicture" alt="Card image">
+    //     <div class="card-img-overlay">
+    //         <h4 class="card-title">@Model.FirstName+@Model.LastName</h4>
+    //         <p class="card-text">@Model.Bio</p>
+    //         <a href="@Model.News" class="btn btn-info">See social Media</a>
+    //     </div>
+    // </div>
+    <div class="card">
+        <h5 class="card-header"> @Model.FirstName @Model.LastName</h5>
+        <div class="card-body">
+            <img class="rounded-circle" src="~/images/cast/@Model.ProfilePicture" alt="Card image">
+             
+            <p class="card-text">Bio: @Model.Bio</p>
+            <a href="https://www.imdb.com/list/ls056262192/" class="btn btn-secondary">See social Media</a>
+        </div>
+    </div>
+}

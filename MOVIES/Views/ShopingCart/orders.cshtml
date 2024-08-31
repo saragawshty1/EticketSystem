@@ -1,0 +1,74 @@
+﻿@model IEnumerable<order>
+
+@{
+    Layout = "_Layout"; // Ensure this is using your layout page which includes Bootstrap CSS
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">Your Orders</h2>
+
+    @foreach (var order in Model)
+    {
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-content-center ">
+                <button type="button" class="btn btn-dark text-center text-light  ">Order# <p class="  bg-warning">@order.Id</p></button>
+                <p class="card-text"><strong>Date:</strong> @order.OrderDate.ToString("MM/dd/yyyy")</p>
+                 <button type="button" class="btn btn-dark text-center text-light  ">Status <p class="  bg-warning">@order.PaymentStatus</p></button>
+                    <a asp-action="Delete" asp-route-id="@order.Id" class="btn btn-danger  ">
+                        <i class="bi bi-trash-fill"></i>
+                    </a>
+                    <a asp-action="confirm" asp-route-id="@order.Id" class="btn btn-success text-center  ">
+                        <i class="bi bi-check-circle-fill align-content-center text-center"></i>
+                    </a>
+              </div>
+                <h4 class="mt-4">Order Items:</h4>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Movie Name</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in order.OrderItems)
+                        {
+                            <tr>
+                                <td>@item.Movie.Name</td>
+                                <td>@item.Count</td>
+                                <td>@String.Format("{0:C}", item.Movie.Price)</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+                <p class="mt-3"><strong>Total Amount:</strong> @String.Format("{0:C}", order.OrderItems.Sum(i => i.Movie.Price * i.Count))</p>
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    .card {
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-title {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .card-text {
+        font-size: 1rem;
+    }
+
+    .table {
+        margin-bottom: 0;
+    }
+
+    .table th, .table td {
+        vertical-align: middle;
+    }
+</style>

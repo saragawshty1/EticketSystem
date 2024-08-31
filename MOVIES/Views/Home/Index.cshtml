@@ -1,0 +1,106 @@
+﻿ @model List<Movie>
+@{
+
+
+
+    <div class="container mt-6">
+        <div class="row">
+            @if (TempData["add"] != null)
+            {
+                <div   style="color: green; Background :antiquewhite; font-weight: bold;padding:2%">
+                    @TempData["add"] Movie added To cart successfully!
+                </div>
+            }
+
+            @foreach (var @item in Model)
+            {
+
+                <!-- First Movie Card -->
+
+
+
+                <div class="col-md-6">
+                    <div class="card mb-3">
+                        <div class="card-header bg-dark text-light  d-flex justify-content-between align-items-center">
+                            @item.Name
+                            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                            {
+                                <a href="/Movie/Edit/@item.Id" class="btn btn-outline-warning mb-3 btn-sm">Edit</a>
+                            }
+                        </div>
+                        <div class="row g-0">
+                            <div class="col-md-4">
+
+                                <img src="~/images/movies/@item.ImgUrl" class="img-fluid rounded-start" alt=" ">
+                            </div>
+
+                            <div class="col-md-8">
+
+                                <div class="card-body">
+
+                                    <p class="card-text"><strong>Price: </strong><button class="btn-secondary">@item.Price</button></p>
+
+                                    <p class="card-text"><strong>Cinema:</strong>@item.cinema.Name</p>
+                                    <p class="card-text"><strong>Start Date:</strong>@item.StartDate</p>
+                                    <p class="card-text"><strong>End Date:</strong> @item.EndDate</p>
+                                    <p class="card-text">
+                                        <strong>Category:</strong> <a href="/Category/MoviesCategory/@item.CategoryId">
+                                            @item.category.Name
+                                        </a>
+                                    </p>
+                                    @* --------------CheckNamedisplay-----------------------
+                            @if (ViewBag.IsSelected == true)
+                            // //       {
+                            //          <p class="card-text"><strong>Category:</strong> @item.category.Name </p>
+
+                            //        }
+                            //  else
+                            //        {
+
+                            //           <p class="card-text">
+                            //            <strong>Category:</strong> <a href="/Home/Index/@item.CategoryId">
+                            //                    @item.category.Name </a></p>
+                            //        }*@
+                                    @* ---------------StatusCheck-----------------------*@
+                                    @if (item.MovieStatus == 0)
+                                    {
+                                        <button class="btn-warning">Upcoming</button>
+
+                                    }
+                                    else if (((int)item.MovieStatus) == 1)
+                                    {
+                                        <button class="btn-primary">Avalibale</button>
+                                    }
+                                    else
+                                    {
+                                        <button class="btn-danger">Expired</button>
+                                    }
+                                    <br />
+                                    <br />
+
+                                    <a href="/Movie/MovieDetails/@item.Id" class="btn btn-outline-secondary">More Details</a>
+                                    @*check If Expired*@
+                                    @if (((int)item.MovieStatus) == 2)
+                                    {
+                                        <a href="#" class="btn btn-secondary disabled">Book Ticket</a>
+                                    }
+                                    else
+                                    {
+                                        <a href="/ShopingCart/Index/@item.Id" class="btn btn-outline-info ">Book Ticket</a>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+            }
+        </div>
+    </div>
+
+
+}

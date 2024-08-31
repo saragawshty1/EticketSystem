@@ -1,0 +1,65 @@
+﻿ @model Movie
+@{
+    //   <div class="container mt-6">
+    // <div class="row">
+
+
+    <!-- First Movie Card -->
+    // <div class="col-md-6">
+    @if (Model.MovieStatus == 0)
+    {
+        <button class="btn btn-warning">Upcoming</button>
+
+    }
+    else if (((int)Model.MovieStatus) == 1)
+    {
+        <button class="btn btn-primary">Avalibale</button>
+    }
+    else
+    {
+        <button class="btn-danger">Expired</button>
+    }
+    <br />
+    <br />
+
+    <div class="card mb-3">
+        <div class="card-header bg-dark text-light">@Model.Name </div>
+        <div class="row g-0">
+            <div class="col-md-4">
+
+                <img src="~/images/movies/@Model.ImgUrl" class="img-fluid rounded-start" alt=" ">
+            </div>
+
+            <div class="col-md-8">
+
+
+                <div class="card-body">
+                    <button type="button" class="btn btn-dark text-center text-light  ">Views <p class="  bg-warning">@ViewBag.count</p></button>
+                    <p class="card-text"> @Model.Description</p><br />
+                    <p class="card-text"><strong>Price: </strong><button>@Model.Price</button></p>
+                    <p class="card-text"><strong>Cinema:</strong>@Model.cinema.Name</p>
+                    <p class="card-text"><strong>Start Date:</strong>@Model.StartDate</p>
+                    <p class="card-text"><strong>End Date:</strong> @Model.EndDate</p>
+                    <p class="card-text"><strong>Category:</strong>@Model.category.Name</p> <br />
+                    <p>Movie Actors</p>
+                    @foreach (var @item in Model.Actors)
+                    {
+                        <a href="/Actor/ActorDetails/@item.Id">
+                            <img src="~/images/cast/@item.ProfilePicture" class="rounded-circle" />
+                        </a>
+                    }
+                    <h5>Trailer</h5>
+                    <video width="400" height="200" controls>
+                        <source src="@Model.TrailerUrl" />
+                    </video><br />
+                    <a href="#" class="btn btn-info">Book Ticket</a>
+                     
+                </div>
+               
+            </div>
+           
+        </div>
+        
+    </div>
+       
+}
